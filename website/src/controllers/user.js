@@ -1,82 +1,81 @@
 const db = require("../database/models");
+const jwt = require("jsonwebtoken")
 const bcrypt = require('bcrypt');
-const { body, validationResult } = require("express-validator");
 const saltRounds = 10;
+
 
 
 const main = {
     post: async (req, res) => {
         try{
-            
-            let data = req.body;
-            console.log(req.body);
-            
+            let data = req.body;            
             let file = req.file;
 
             const salt = bcrypt.genSaltSync(saltRounds);
             const hash = bcrypt.hashSync(data.password, salt);
 
-            console.log("password", data.password)
-            console.log("password2", hash)
-
             
             let usuario = {
+                username: String(data.username),
                 nombre: String(data.nombre),
+                email: String(data.email),
                 apellido: String(data.apellido),
-                password: String(hash),
-                photo: "/"+ data.nombre.trim().replace(/\s+/g, '') +"/" + file.filename,
+                password: hash,
+                avatar: "/"+ data.nombre.trim().replace(/\s+/g, '') +"/" + file.filename,
             }
 
             let usuarios = await db.Users.create(usuario)
 
-            return console.log("llegue bien perreke");
+            ;
             
         }catch(e){
             console.log(e);
         }
     },
     acceso: async (req, res) => {
-        console.log(req.body)
-        try{
-            const errors = validationResult(req);
-            // return res.send(errors)
-            if (!errors.isEmpty()){
-                console.log(errors)
-                return res.redirect( { errors: errors.mapped(),title:"Acceso", old:req.body }, "http://localhost:3000/login");
-            }else{
-                let usuario = await db.User.findOne({where: {email: req.body.correo}});
-                req.session.user = usuario;
-                // return res.send(usuario)
-                if(req.body.recordarme){
-                    res.cookie("email",req.body.correo,{maxAge:300000})
-                }
-                // res.locals.userId = usuario.id;
-                return res.redirect("/usuario/perfil/" + usuario.id)
+        try{            
+            const {body} = req;
+            const {username, password} = body
+
+            let user = await db.Users.findOne({ where: {username: username}})
+
+            /** Ternario para validar email si el usuario no utiliza su username */
+
+            user === null ? user = await db.Users.findOne({ where: {email: username}}) : false
+
+            const passwordCorrect = user === null ? false : await bcrypt.compare(password, user.password)
+
+            if(!(user && passwordCorrect)){
+                res.status(401).json({error: "Usuario o contraseña invalido"}) 
+                    
             }
+
+            const userforToken = {
+                id: user.id,
+                username: user.username
+            }
+
+            console.log(process.env.SECRETO);
+
+            const token = jwt.sign(userforToken, "laLibertadoresLaJuegaPapa")
+
+            res.send({nombre: user.nombre, username: user.username, avatar: user.avatar, token})
+            
         }catch(error){
-            res.send(error)
+            console.log(error)
+        }
+    },
+    post_favorites: async (req, res) => {
+        let body = req.body
+
+        let favoritos = {
+            instrumento_id: req.body.id_fav,
+            usuario_id: req.body.id
         }
 
-        return res.redirect("http://localhost:3000/")
+        db.Favorites.create(favoritos)
 
-                // console.log("acceso")
-                // var errors = validationResult(req)
-                // if(!errors.isEmpty()){
-                //     console.log(errors)
-                //     console.log("LLEGUEEEE")
-                    
-                // }else{
-                //     console.log("hola chango")
-                //     // console.log("LLEGUEEEE2")
-                //     // // let usuario = await db.User.findOne({where: {email: req.body.correo}});
-                //     // req.session.user = usuario;
-                //     // // return res.send(usuario)
-                //     // if(req.body.recordarme){
-                //     //     res.cookie("email",req.body.correo,{maxAge:300000})
-                //     // }
-                //     // // res.locals.userId = usuario.id;
-                //     // return res.redirect("/usuario/perfil/" + usuario.id)
-                // }
+        res.send(body)
     }
 }
 

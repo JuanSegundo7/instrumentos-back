@@ -7,23 +7,32 @@ module.exports = (sequelize, dataTypes) => {
             autoIncrement: true,
             notNull: true
         },
-        nombre: {
-            type: dataTypes.STRING(20),
+        username: {
+            type: dataTypes.STRING(30),
             notNull: true,
         },
+        nombre: {
+            type: dataTypes.STRING(30),
+            notNull: true,
+        },
+        email: {
+            type: dataTypes.STRING(40),
+            notNull: true
+        },
         apellido: {
-            type: dataTypes.STRING(20),
-        notNull: true
+            type: dataTypes.STRING(30),
+            notNull: true
         },
         password: {
             type: dataTypes.STRING(100),
             notNull: true
         },
-        photo: {
+        avatar: {
             type: dataTypes.STRING(200),
             notNull: true
         }
     }
+    
     let config = {
         tableName: "usuarios",
         timestamps: false
@@ -31,5 +40,12 @@ module.exports = (sequelize, dataTypes) => {
 
     const Users = sequelize.define(alias,cols,config) 
 
+    Users.associate = function(models){
+        Users.hasMany(models.Favorites, {
+            as: "favoritos",
+            foreignKey: "usuario_id",
+        })
+    }
+    
     return Users
 }

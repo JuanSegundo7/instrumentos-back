@@ -3,10 +3,8 @@ const router = express.Router();
 const path = require("path");
 const fs = require("fs");
 const user = require("../controllers/user");
-const login = require("../middlewares/validLogin")
 // const userlogin = require("../middlewares/user")
 const multer = require("multer");
-
 
 // ************ Multer ************
 
@@ -28,7 +26,8 @@ const upload = multer({storage:dest});
 
 // ************ Routes ************
 
-router.post("/login",login ,user.acceso)
+router.post("/login", user.acceso)
 router.post('/guardar', upload.single("file") , user.post)
+router.post("/fav", user.post_favorites)
 
 module.exports = router;

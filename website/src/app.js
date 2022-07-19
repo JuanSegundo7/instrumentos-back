@@ -28,7 +28,23 @@ app.use(express.urlencoded({ extended: true}));
 app.use(express.json())
 
 //CORS
-app.use(cors());
+
+const corsOptions ={
+    origin:'http://localhost:3000', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}
+
+app.use(cors(corsOptions));
+
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+//     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+//     console.log("headers entre")
+//     next();
+// });
 
 // ************ Servidor ************
 
@@ -53,9 +69,6 @@ const apiUsers = require("./routes/apiUser.js");
 app.use("/user", apiUsers);
 
 // ************ Middleware Customs ************
-
-// app.use(require("./middlewares/user"));
-app.use(require("./middlewares/validLogin"));
 
 
 

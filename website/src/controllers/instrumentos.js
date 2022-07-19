@@ -27,13 +27,11 @@ const instruments = {
             Array.from(file).forEach(img => {
                 imagenes.push(img.filename);
             })
-            //console.log("imagenes", imagenes);
 
-            // console.log("gian puto", instrumentosCreated)
             let imagenesCreated = await imagenes.forEach(img => {  
                 db.Image.create({
                     url_imagen: "/"+ data.nombre.trim().replace(/\s+/g, '') +"/" + img,
-                    instrumento_id: instrumentosCreated .id
+                    instrumento_id: instrumentosCreated.id
             })
         });
         

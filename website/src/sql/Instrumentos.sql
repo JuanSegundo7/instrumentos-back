@@ -35,10 +35,12 @@ CREATE TABLE imagenes(
 
 CREATE TABLE usuarios(
 	id TINYINT(3) NOT NULL AUTO_INCREMENT,
-  	nombre VARCHAR(20) NOT NULL,
-	apellido VARCHAR(20) NOT NULL,
+    username VARCHAR(30) NOT NULL,
+  	nombre VARCHAR(30) NOT NULL,
+    email VARCHAR(40) NOT NULL,
+	apellido VARCHAR(30) NOT NULL,
   	password VARCHAR(200) NOT NULL,
-	photo VARCHAR(200) NOT NULL, 
+	avatar VARCHAR(200) NOT NULL, 
   	PRIMARY KEY(id)
 );
 
