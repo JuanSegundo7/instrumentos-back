@@ -30,7 +30,7 @@ app.use(express.json())
 //CORS
 
 const corsOptions ={
-    origin:'https://instrumentoss.herokuapp.com/', 
+    origin:'https://instrumentoss.herokuapp.com', 
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200
 }
