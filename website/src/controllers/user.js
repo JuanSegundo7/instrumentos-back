@@ -21,12 +21,10 @@ const main = {
                 email: String(data.email),
                 apellido: String(data.apellido),
                 password: hash,
-                avatar: "/"+ data.nombre.trim().replace(/\s+/g, '') +"/" + file.filename,
+                avatar: "/"+ data.nombre.trim().replace(/\s+/g, '') +"/" + data.file,
             }
 
-            let usuarios = await db.Users.create(usuario)
-
-            ;
+            let usuarios = await db.Users.create(usuario);
             
         }catch(e){
             console.log(e);

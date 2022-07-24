@@ -35,7 +35,6 @@ const instruments = {
             })
         });
         
-            return res.redirect("http://localhost:3000/");
             
         }catch(e){
             console.log(e);
