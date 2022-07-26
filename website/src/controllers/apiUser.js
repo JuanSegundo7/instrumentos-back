@@ -8,7 +8,7 @@ const main = {
         return res.send(user)
     },
     all: async (req, res) => {
-        let user = await db.Users.findAll();
+        let user = await db.Users.findAll({include:{association: "favoritos"}});
         console.log("user", user)
         return res.send(user)
     },
