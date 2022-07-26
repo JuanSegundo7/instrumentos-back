@@ -26,7 +26,7 @@ const upload = multer({storage:dest});
 
 // ************ Rutas ************
 
-router.post("/guardar",[upload.any()], instrumentos.post); 
+router.post("/guardar",[upload.any("images")], instrumentos.post); 
 router.get("/:category",  instrumentos.categorys)
 
 
