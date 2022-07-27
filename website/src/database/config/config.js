@@ -8,17 +8,17 @@ module.exports = {
     "port": 3306
   },
   "test": {
-    "username": "sxbg6t531xwo2u92",
-    "password": "txhx0zw0em4uo94",
-    "database": "tdf8qjy6uskch7ql",
-    "host": "t07cxyau6qg7o5nz.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    "username": "ci632ujgi67fdosq",
+    "password": "mkq737kvlmsguhqx",
+    "database": "qpc83dozuwrkw637",
+    "host": "y6aj3qju8efqj0w1.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "production": {
-    "username": "sxbg6t531xwo2u92",
-    "password": "txhx0zw0em4uo94",
-    "database": "tdf8qjy6uskch7ql",
-    "host": "t07cxyau6qg7o5nz.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    "username": "ci632ujgi67fdosq",
+    "password": "mkq737kvlmsguhqx",
+    "database": "qpc83dozuwrkw637",
+    "host": "y6aj3qju8efqj0w1.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "dialect": "mysql"
   }
 }
