@@ -4,7 +4,7 @@ const instrumentos = require("./apiInstruments")
 const main = {
     user_id: async (req, res) => {
         console.log("id", req.params.id)
-        let user = await db.Users.findOne({where: {id: req.params.id}});
+        let user = await db.Users.findOne({where: {id: req.params.id},include:{association: "favoritos"}});
         return res.send(user)
     },
     all: async (req, res) => {
