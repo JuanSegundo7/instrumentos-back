@@ -19,9 +19,6 @@ const main = {
 
         let favs = await db.Favorites.findAll({where: {usuario_id: req.params.id}})
         
-        // for (let i = 0; i < favs.length; i++) {
-        //     container.push(favs[i].instrumento_id)
-        // }
 
         favs.forEach(instrumento => {
             container.push(instrumento.instrumento_id)

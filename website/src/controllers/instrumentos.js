@@ -5,7 +5,6 @@ const instruments = {
         try{
             
             let data = req.body;
-            
             let file = req.files;
             
             let instrumento = {
@@ -32,8 +31,8 @@ const instruments = {
                 db.Image.create({
                     url_imagen: "/"+ data.nombre.trim().replace(/\s+/g, '') +"/" + img,
                     instrumento_id: instrumentosCreated.id
-            })
-        });
+                })
+            });
         
             
         }catch(e){
